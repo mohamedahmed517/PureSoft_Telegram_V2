@@ -69,9 +69,9 @@ python app.py
 Required environment variables:
 
 ```env
+DATABASE_URL=your_database_url
 GEMINI_API_KEY=your_gemini_api_key
 TELEGRAM_TOKEN=your_telegram_bot_token
-DATABASE_URL=postgresql://... (optional for local)
 ```
 
 See `.env.example` for all available options.
@@ -186,4 +186,5 @@ For issues and questions, please open a GitHub issue.
 
 - Built with [Gemini AI](https://ai.google.dev/)
 - Deployed on [Railway](https://railway.app)
+
 - Telegram Bot API
