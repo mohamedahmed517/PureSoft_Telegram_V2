@@ -123,4 +123,3 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
         metrics.track_error("gemini_chat")
 
         return "ثواني بس فيه مشكلة دلوقتي هحلها وارجعلك..."
-
