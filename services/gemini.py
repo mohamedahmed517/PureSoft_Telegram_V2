@@ -20,12 +20,6 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
     try:
         now = datetime.now().strftime("%Y-%m-%d %H:%M")
 
-        if len(conversation_history[user_key]) == 0:
-            reply = "أهلاً وسهلاً! أنا البوت الذكي بتاع آفاق ستورز\nإزيك؟ تحب أساعدك في إيه النهاردة؟"
-            add_message(user_key, "assistant", reply, now)
-            metrics.track_message("welcome")
-            return reply
-
         history_text, recent_messages = get_conversation_context(user_key)
         products_text = build_product_catalog()
 
@@ -108,3 +102,4 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
         logger.error(f"❌ Error in gemini_chat: {e}", exc_info=True)
         metrics.track_error("gemini_chat")
         return "ثواني بس فيه مشكلة دلوقتي هحلها وارجعلك..."
+
