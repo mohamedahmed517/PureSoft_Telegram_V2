@@ -23,7 +23,7 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
         history_text, recent_messages = get_conversation_context(user_key)
         products_text = build_product_catalog()
 
-         prompt = f"""
+        prompt = f"""
 أنت البوت الذكي بتاع آفاق ستورز، بتتكلم عامية مصرية ودودة وطبيعية.
 أنت مساعد شامل بتعرف تتكلم في أي موضوع: موضة، سياحة، طقس، أماكن خروج، نصايح عامة، وأي حاجة تانية.
 
@@ -75,6 +75,7 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
 
 رد دلوقتي:
 """.strip()
+
         response = None
         for attempt in range(max_retries):
             try:
@@ -113,5 +114,3 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
         logger.error(f"❌ Error in gemini_chat: {e}", exc_info=True)
         metrics.track_error("gemini_chat")
         return "ثواني بس فيه مشكلة دلوقتي هحلها وارجعلك..."
-
-
