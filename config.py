@@ -1,6 +1,3 @@
-"""
-Configuration management for Afaq Store Bot
-"""
 import os
 from dotenv import load_dotenv
 from utils.logger import logger
@@ -11,7 +8,9 @@ class Config:
     """Application configuration"""
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
     TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-    DATABASE_URL = os.getenv("DATABASE_URL")
+    TELEGRAM_DATABASE_URL = os.getenv("TELEGRAM_DATABASE_URL")
+    WEB_DATABASE_URL = os.getenv("WEB_DATABASE_URL")
+    AUTH_DATABASE_URL = os.getenv("AUTH_DATABASE_URL")
     PORT = int(os.getenv("PORT", 5000))
     MAX_HISTORY = int(os.getenv("MAX_HISTORY", 200))
     SAVE_INTERVAL = int(os.getenv("SAVE_INTERVAL", 60))
@@ -23,6 +22,7 @@ class Config:
     MESSAGE_QUEUE_SIZE = int(os.getenv("MESSAGE_QUEUE_SIZE", 100))
     ENABLE_DEBUG = os.getenv("ENABLE_DEBUG", "false").lower() == "true"
     ADMIN_SECRET = os.getenv("ADMIN_SECRET", "change_me_in_production")
+    SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-change-in-production")
 
     @classmethod
     def validate(cls):
