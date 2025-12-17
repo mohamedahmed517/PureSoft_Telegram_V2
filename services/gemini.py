@@ -6,11 +6,12 @@ import time
 import base64
 from PIL import Image
 from datetime import datetime
+from google.genai import types
 from utils.logger import logger
 from utils.metrics import metrics
+from web_database import save_web_conversation
 from services.products import build_product_catalog
 from models import CLIENT, GENERATION_CONFIG, SAFETY_SETTINGS
-from google.genai import types
 from services.history import conversation_history, get_conversation_context, add_message
 
 def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
@@ -68,9 +69,7 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
         response = None
         for attempt in range(max_retries):
             try:
-                # Get config dict and remove safety_settings if present
                 config_dict = GENERATION_CONFIG.model_dump() if hasattr(GENERATION_CONFIG, 'model_dump') else GENERATION_CONFIG.dict()
-                # Remove safety_settings from config_dict to avoid duplicate
                 config_dict.pop('safety_settings', None)
                 
                 if audio_data:
@@ -127,8 +126,19 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
                     raise
        
         reply = response.text.strip() if response and hasattr(response, "text") and response.text else "ثواني بس فيه مشكلة دلوقتي..."
+        
         add_message(user_key, "user", text or ("[صورة]" if image_b64 else "[صوت]"), now)
         add_message(user_key, "assistant", reply, now)
+        
+        if user_key.startswith("web:"):
+            try:
+                user_id = int(user_key.split(":")[1])
+                history = conversation_history.get(user_key, [])
+                save_web_conversation(user_id, history)
+                logger.info(f"💾 Saved web conversation for user {user_id}")
+            except Exception as e:
+                logger.error(f"❌ Error saving web conversation: {e}")
+        
         response_time = time.time() - start_time
         metrics.track_response_time(response_time)
        
