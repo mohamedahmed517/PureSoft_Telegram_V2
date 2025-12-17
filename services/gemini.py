@@ -68,6 +68,7 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
         response = None
         for attempt in range(max_retries):
             try:
+                config_dict = GENERATION_CONFIG.model_dump() if hasattr(GENERATION_CONFIG, 'model_dump') else GENERATION_CONFIG.dict()
                 if audio_data:
                     response = CLIENT.models.generate_content(
                         model='gemini-2.5-flash',
@@ -76,7 +77,7 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
                             {"mime_type": "audio/ogg", "data": audio_data}
                         ],
                         config=types.GenerateContentConfig(
-                            **GENERATION_CONFIG,
+                            **config_dict,
                             safety_settings=SAFETY_SETTINGS
                         )
                     )
@@ -95,7 +96,7 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
                             {"mime_type": "image/png", "data": img_bytes.read()}
                         ],
                         config=types.GenerateContentConfig(
-                            **GENERATION_CONFIG,
+                            **config_dict,
                             safety_settings=SAFETY_SETTINGS
                         )
                     )
@@ -106,7 +107,7 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
                         model='gemini-2.5-flash',
                         contents=prompt,
                         config=types.GenerateContentConfig(
-                            **GENERATION_CONFIG,
+                            **config_dict,
                             safety_settings=SAFETY_SETTINGS
                         )
                     )
