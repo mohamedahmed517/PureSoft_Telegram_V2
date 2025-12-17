@@ -23,4 +23,3 @@ def init_conversation_history():
     conversations = load_all_telegram_conversations()
     conversation_history.update(conversations)
     logger.info(f"✅ Loaded {len(conversations)} conversation histories")
-
