@@ -617,8 +617,8 @@
             const avatar = role === 'user' ? '👤' : '🤖';
             
             messageDiv.innerHTML = `
-                <div class="message-avatar">${avatar}</div>
-                <div class="message-content">${content.replace(/\n/g, '<br>')}</div>
+            <div class="message-avatar">${avatar}</div>
+            <div class="message-content">${content.replace(/\n/g, '<br>').replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color: #667eea; text-decoration: underline;">$1</a>')}</div>
             `;
             
             chatArea.appendChild(messageDiv);
