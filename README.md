@@ -191,7 +191,4 @@ For issues and questions, please open a GitHub issue.
 
 - Built with [Gemini AI](https://ai.google.dev/)
 - Deployed on [Railway](https://railway.app)
-
 - Telegram Bot API
-
-
