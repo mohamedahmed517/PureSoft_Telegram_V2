@@ -22,7 +22,7 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
         now = datetime.now().strftime("%Y-%m-%d %H:%M")
         history_text, recent_messages = get_conversation_context(user_key)
         products_text = build_product_catalog()
-prompt = f"""
+        prompt = f"""
 أنت البوت الذكي بتاع آفاق ستورز، بتتكلم عامية مصرية ودودة وطبيعية.
 أنت مساعد شامل بتعرف تتكلم في أي موضوع.
 
@@ -49,7 +49,7 @@ prompt = f"""
 1. **اسمع كويس لآخر رسالة** ورد عليها بشكل طبيعي وعامية مصرية.
 
 2. **لما العميل يذكر كلمة من الكلمات المفتاحية**، ابدأ بالرد عادي وبعدين قول: "بالنسبة لـ [الموضوع]، عندنا حاجات كويسة ممكن تفيدك:" 
-   واعرض 2-3 منتجات **من أي فئة تناسب الموقف** - مش شرط لبس! ممكن تكون:
+   واعرض 2-6 منتجات **من أي فئة تناسب الموقف** - مش شرط لبس! ممكن تكون:
    - منتجات عناية شخصية
    - إكسسوارات
    - أدوات منزلية
@@ -190,6 +190,7 @@ prompt = f"""
         logger.error(f"❌ Error in gemini_chat: {e}", exc_info=True)
         metrics.track_error("gemini_chat")
         return "ثواني بس فيه مشكلة دلوقتي هحلها وارجعلك..."
+
 
 
 
