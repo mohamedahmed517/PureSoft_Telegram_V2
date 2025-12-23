@@ -30,8 +30,8 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
 {history_text}
 
 **بيانات المنتجات - تنسيق جديد هام:**
-المنتجات تأتي بالشكل ده: `ID,السعر,اسم_المنتج`
-مثال: `13,260,هيد اند شولدرز شامبو انتعاش الليمون 400 مل`
+المنتجات تأتي بالشكل ده: `ID,السعر,اسم_المنتج,الفئة`
+مثال: `13,260,هيد اند شولدرز شامبو انتعاش الليمون 400 مل,شامبو`
 لما تشوف المنتجات في `{products_text}`، هتعامل معاها كالتالي:
 1. كل سطر فيه بيانات منتج كاملة
 2. اللينك يتعمل من الـ ID: https://afaq-stores.com/product-details/[ID]
@@ -59,8 +59,9 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
 3. **طريقة عرض المنتج - تنسيق إجباري:**
    لكل منتج تعرضه، استخدم **هذا الشكل بالضبط**:
    
-   اسم المنتج (من العمود الثاني في الداتا)
-   السعر: [السعر من العمود الثالث] جنيه
+   اسم المنتج (من العمود الثالث في الداتا)
+   السعر: [السعر من العمود الثاني] جنيه
+   الكاتيجوري: [الفئة من العمود الرابع]
    اللينك: https://afaq-stores.com/product-details/[ID من العمود الأول]
    
    سطر فاضي بعد كل منتج.
@@ -71,10 +72,12 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
    
    انجل برفان لفز 50 مل
    السعر: 115.5 جنيه
+   الكاتيجوري: برفان
    اللينك: https://afaq-stores.com/product-details/153
    
    كوتشي ابيض كلاسيك نضيف
    السعر: 380.0 جنيه
+   الكاتيجوري: لبس ربيعي
    اللينك: https://afaq-stores.com/product-details/1018"
 
 5. **الكلمات المفتاحية اللي تبدأ بيها الاقتراحات:**
@@ -187,4 +190,5 @@ def gemini_chat(text="", image_b64=None, audio_data=None, user_key="unknown"):
         logger.error(f"❌ Error in gemini_chat: {e}", exc_info=True)
         metrics.track_error("gemini_chat")
         return "ثواني بس فيه مشكلة دلوقتي هحلها وارجعلك..."
+
 
